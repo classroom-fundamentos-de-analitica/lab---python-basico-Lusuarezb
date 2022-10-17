@@ -11,7 +11,13 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-
+# Lectura del archivo
+import csv
+archivo = []
+with open("data.csv", 'r') as file:
+        csvreader = csv.reader(file, delimiter= "	")  
+        for row in csvreader:
+            archivo.append(row)
 
 def pregunta_01():
     """
@@ -21,7 +27,10 @@ def pregunta_01():
     214
 
     """
-    return
+    counter = 0
+    for linea in archivo:
+        counter += int(linea[1])
+    return counter
 
 
 def pregunta_02():
