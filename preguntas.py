@@ -247,7 +247,12 @@ def pregunta_09():
         for termino in division:
             llave = termino.split(":")[0]
             contador[llave] = contador.get(llave, 0) + 1
-    return sorted(list(contador.items()))
+
+    diccionario = {}
+    for key in sorted(contador.keys()):
+        diccionario[key] = contador[key]
+    
+    return diccionario
 
 
 def pregunta_10():
