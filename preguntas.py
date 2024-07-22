@@ -11,7 +11,13 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-
+# Lectura del archivo
+import csv
+archivo = []
+with open("data.csv", 'r') as file:
+        csvreader = csv.reader(file, delimiter= "	")  
+        for row in csvreader:
+            archivo.append(row)
 
 def pregunta_01():
     """
@@ -21,7 +27,10 @@ def pregunta_01():
     214
 
     """
-    return
+    counter = 0
+    for linea in archivo:
+        counter += int(linea[1])
+    return counter
 
 
 def pregunta_02():
@@ -39,7 +48,11 @@ def pregunta_02():
     ]
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        key = linea[0]
+        contador[key] = contador.get(key, 0) + 1
+    return sorted(list(contador.items()))
 
 
 def pregunta_03():
@@ -57,7 +70,11 @@ def pregunta_03():
     ]
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        key, valor = linea[0], int(linea[1])
+        contador[key] = contador.get(key, 0) + valor
+    return sorted(list(contador.items()))
 
 
 def pregunta_04():
@@ -82,7 +99,12 @@ def pregunta_04():
     ]
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        fecha = linea[2].split("-")
+        key = fecha[1]
+        contador[key] = contador.get(key, 0) + 1
+    return sorted(list(contador.items()))
 
 
 def pregunta_05():
@@ -100,7 +122,12 @@ def pregunta_05():
     ]
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        key, valor = linea[0], int(linea[1])
+        contador[key] = (max(valor, contador.get(key, (valor, valor))[0]), min(valor, contador.get(key, (valor, valor))[1]))
+    auxiliar = [(tupla[0], tupla[1][0], tupla[1][1]) for tupla in list(contador.items())]
+    return sorted(auxiliar)
 
 
 def pregunta_06():
@@ -125,7 +152,15 @@ def pregunta_06():
     ]
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        division = linea[4].split(",")
+        for termino in division:
+            key,valor = termino.split(":")
+            valor = int(valor)
+            contador[key] = (min(valor, contador.get(key, (valor, valor))[0]), max(valor, contador.get(key, (valor, valor))[1]))
+    auxiliar = [(tupla[0], tupla[1][0], tupla[1][1]) for tupla in list(contador.items())]
+    return sorted(auxiliar)
 
 
 def pregunta_07():
@@ -149,7 +184,11 @@ def pregunta_07():
     ]
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        key, valor = int(linea[1]), linea[0]
+        contador[key] = contador.get(key, []) + [valor]
+    return sorted(list(contador.items()))
 
 
 def pregunta_08():
@@ -174,7 +213,12 @@ def pregunta_08():
     ]
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        llave, valor = int(linea[1]), linea[0]
+        if (valor not in contador.get(llave, [])):
+            contador[llave] = sorted(contador.get(llave, []) + [valor])
+    return sorted(list(contador.items()))
 
 
 def pregunta_09():
@@ -197,7 +241,18 @@ def pregunta_09():
     }
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        division = linea[4].split(",")
+        for termino in division:
+            llave = termino.split(":")[0]
+            contador[llave] = contador.get(llave, 0) + 1
+
+    diccionario = {}
+    for key in sorted(contador.keys()):
+        diccionario[key] = contador[key]
+    
+    return diccionario
 
 
 def pregunta_10():
@@ -218,7 +273,11 @@ def pregunta_10():
 
 
     """
-    return
+    contador = []
+    for linea in archivo:
+        llave, valor1, valor2 = linea[0], len(linea[3].split(",")), len(linea[4].split(","))
+        contador.append((llave,valor1, valor2))
+    return contador
 
 
 def pregunta_11():
@@ -239,8 +298,17 @@ def pregunta_11():
 
 
     """
-    return
-
+    contador = {}
+    for linea in archivo:
+        llaves, valor = linea[3].split(","), int(linea[1])
+        for llave in llaves:
+            contador[llave] = contador.get(llave, 0) + valor
+    
+    diccionario = {}
+    for key in sorted(contador.keys()):
+        diccionario[key] = contador[key]
+        
+    return diccionario
 
 def pregunta_12():
     """
@@ -257,4 +325,15 @@ def pregunta_12():
     }
 
     """
-    return
+    contador = {}
+    for linea in archivo:
+        llave, valores = linea[0], linea[4].split(",")
+        for valor in valores:
+            numero = int(valor.split(":")[1])
+            contador[llave] = contador.get(llave, 0) + numero
+
+    diccionario = {}
+    for key in sorted(contador.keys()):
+        diccionario[key] = contador[key]
+        
+    return diccionario
